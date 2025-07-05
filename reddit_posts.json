@@ -7,17 +7,19 @@
     "created": "2025-07-02 21:21:00",
     "subreddit": "digitalnomad",
     "context": "question",
-    "relevance_score": 2
+    "relevance_score": 2,
+    "sentiment": "neutral"
   },
   {
     "title": "Hokkaido Experience",
     "url": "https://www.reddit.com/r/JapanTravel/comments/1lqoaw5/hokkaido_experience/",
-    "up-votes": 82,
+    "up-votes": 81,
     "comments": 11,
     "created": "2025-07-03 12:27:53",
     "subreddit": "JapanTravel",
     "context": "general",
-    "relevance_score": 1
+    "relevance_score": 1,
+    "sentiment": "positive"
   },
   {
     "title": "Local SMS not arriving while using travel eSIM",
@@ -27,6 +29,7 @@
     "created": "2025-07-04 18:29:25",
     "subreddit": "TravelHacks",
     "context": "general",
-    "relevance_score": 1
+    "relevance_score": 1,
+    "sentiment": "neutral"
   }
 ]

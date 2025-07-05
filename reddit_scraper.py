@@ -1,5 +1,6 @@
 import praw, json, re
 from datetime import datetime, timezone, timedelta
+from textblob import TextBlob
 
 reddit = praw.Reddit(
     client_id='I8ieylAr3UeRYE5hiXKOTA',
@@ -38,6 +39,14 @@ for sub in subreddits:
         hits = keyword_hits(text_blob)
 
         if hits:
+            sentiment_score = TextBlob(text_blob).sentiment.polarity
+            if sentiment_score > 0.1:
+                sentiment = "positive"
+            elif sentiment_score < -0.1:
+                sentiment = "negative"
+            else:
+                sentiment = "neutral"
+
             results.append(
                 {
                     "title": post.title,
@@ -47,7 +56,8 @@ for sub in subreddits:
                     "created": created_dt.strftime("%Y-%m-%d %H:%M:%S"),
                     "subreddit": post.subreddit.display_name,
                     "context": "question" if "?" in post.title else "general",
-                    "relevance_score": hits
+                    "relevance_score": hits,
+                    "sentiment": sentiment
                 }
             )
 
