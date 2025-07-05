@@ -17,6 +17,10 @@ keywords = [
 
 kw_regex = re.compile("|".join(re.escape(k.lower()) for k in keywords))
 
+# Function to count keyword matches
+def keyword_hits(text: str) -> int:
+    return sum(1 for kw in keywords if kw.lower() in text)
+
 # Search in related subreddits
 subreddits = ["travel", "solotravel", "digitalnomad", "backpacking", "technology", "europeTravel", "Shoestring", "JapanTravel", "WorkOnline", "RemoteWork", "TravelHacks"]
 
@@ -31,16 +35,19 @@ for sub in subreddits:
             continue
 
         text_blob = f"{post.title} {post.selftext or ''}".lower()
-        if kw_regex.search(text_blob):
+        hits = keyword_hits(text_blob)
+
+        if hits:
             results.append(
                 {
                     "title": post.title,
                     "url": post.url,
-                    "score": post.score,
+                    "up-votes": post.score,
                     "comments": post.num_comments,
                     "created": created_dt.strftime("%Y-%m-%d %H:%M:%S"),
                     "subreddit": post.subreddit.display_name,
-                    "context": "question" if "?" in post.title else "general"
+                    "context": "question" if "?" in post.title else "general",
+                    "relevance_score": hits
                 }
             )
 
