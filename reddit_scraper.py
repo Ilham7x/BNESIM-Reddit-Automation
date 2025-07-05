@@ -34,6 +34,18 @@ subreddits = ["travel", "solotravel", "digitalnomad", "backpacking", "technology
 results = []
 one_week_ago = datetime.now(timezone.utc) - timedelta(days=7)
 
+# context detection function
+def assess_context(text: str) -> str:
+    lowered = text.lower()
+    if "?" in lowered and any(k in lowered for k in ["sim", "eSIM", "data", "connectivity", "roaming", "bnasim", "internet"]):
+        return "question"
+    elif any(x in lowered for x in ["problem", "issue", "doesn't work", "can't", "not working", "trouble", "error", "not receiving"]):
+        return "complaint"
+    elif any(x in lowered for x in ["suggest", "recommend", "advice", "looking for", "which", "what's best"]):
+        return "recommendation request"
+    else:
+        return "general"
+
 for sub in subreddits:
     try:
         logging.info(f"Processing subreddit: {sub}")
@@ -50,6 +62,7 @@ for sub in subreddits:
 
                 text_blob = f"{post.title} {post.selftext or ''}".lower()
                 hits = keyword_hits(text_blob)
+                context = assess_context(text_blob)
 
                 if hits:
                     sentiment_score = TextBlob(text_blob).sentiment.polarity
@@ -70,7 +83,7 @@ for sub in subreddits:
                             "comments": post.num_comments,
                             "created": created_dt.strftime("%Y-%m-%d %H:%M:%S"),
                             "subreddit": post.subreddit.display_name,
-                            "context": "question" if "?" in post.title else "general",
+                            "context": context,
                             "relevance_score": hits,
                             "sentiment": sentiment,
                             "engagement_score": engagement_score
