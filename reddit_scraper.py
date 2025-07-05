@@ -47,6 +47,8 @@ for sub in subreddits:
             else:
                 sentiment = "neutral"
 
+            engagement_score = post.score + (2 * post.num_comments)
+
             results.append(
                 {
                     "title": post.title,
@@ -57,7 +59,8 @@ for sub in subreddits:
                     "subreddit": post.subreddit.display_name,
                     "context": "question" if "?" in post.title else "general",
                     "relevance_score": hits,
-                    "sentiment": sentiment
+                    "sentiment": sentiment,
+                    "engagement_score": engagement_score
                 }
             )
 
