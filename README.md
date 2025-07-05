@@ -4,7 +4,7 @@ This project automatically discovers Reddit posts mentioning **travel eSIMs**, *
 
 ---
 
-## 🚀 Features
+## Features
 
 ### 🔍 Discovery Engine
 - Searches across travel-related subreddits for relevant posts within the **last 7 days**
