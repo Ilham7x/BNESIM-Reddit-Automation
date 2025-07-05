@@ -2,6 +2,9 @@ import praw, json, re, logging
 from datetime import datetime, timezone, timedelta
 from textblob import TextBlob
 
+MIN_UPVOTES = 5
+MIN_COMMENTS = 5
+
 # Logging setup
 logging.basicConfig(level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s")
 
@@ -39,6 +42,10 @@ for sub in subreddits:
                 # keep only last 7 days posts
                 created_dt = datetime.fromtimestamp(post.created_utc, tz=timezone.utc)
                 if created_dt < one_week_ago:
+                    continue
+
+                # skip low-engagement posts
+                if post.score < MIN_UPVOTES and post.num_comments < MIN_COMMENTS:
                     continue
 
                 text_blob = f"{post.title} {post.selftext or ''}".lower()
