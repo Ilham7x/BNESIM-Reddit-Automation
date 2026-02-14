@@ -103,7 +103,7 @@ set TOGETHER_API_KEY=your_together_api_key_here
 
 ## ✍️ Author
 
-**Ilham Ghori** — 2025 BNESIM Assessment Submission
+**Ilham Ghori** — 2025 
 
 ---
 
